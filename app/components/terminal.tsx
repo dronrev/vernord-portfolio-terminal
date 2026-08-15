@@ -24,6 +24,8 @@ function runCommand(command: string): { output: React.ReactNode; isError?: boole
             };
         case "contact":
             return { output: "Email: vernordmusran27@gmail.com" };
+        case "resume":
+            return { output: "Unlocked resume panel ->" };
         case "admin":
             return {
                 output: (
@@ -41,7 +43,7 @@ function runCommand(command: string): { output: React.ReactNode; isError?: boole
                 ),
             };
         case "yow":
-            return { output: "Supported commands: about, projects, contact, clear, yow" };
+            return { output: "Supported commands: about, projects, contact, resume, clear, yow" };
         default:
             return {
                 output: `Error: Command '${command}' not found. Type 'yow' to see the list of supported commands.`,
@@ -50,7 +52,11 @@ function runCommand(command: string): { output: React.ReactNode; isError?: boole
     }
 }
 
-export default function Terminal() {
+type TerminalProps = {
+    onResumeUnlock?: () => void;
+};
+
+export default function Terminal({ onResumeUnlock }: TerminalProps) {
     const [history, setHistory] = useState<HistoryEntry[]>([]);
     const [input, setInput] = useState("");
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -70,6 +76,10 @@ export default function Terminal() {
         if (command.trim().toLowerCase() === "clear") {
             setHistory([]);
             return;
+        }
+
+        if (command.trim().toLowerCase() === "resume") {
+            onResumeUnlock?.();
         }
 
         const { output, isError } = runCommand(command);

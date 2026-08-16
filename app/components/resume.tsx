@@ -1,3 +1,5 @@
+import Welcome from "@/content/welcome.mdx";
+
 type ResumeSection = {
     role: string;
     company: string;

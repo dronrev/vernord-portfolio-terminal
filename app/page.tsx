@@ -4,9 +4,12 @@ import { useState } from "react";
 import Resume from "./components/resume";
 import SocialMedia from "./components/social-media";
 import Terminal from "./components/terminal";
+import Welcome from "@/content/welcome.mdx";
 
 export default function Home() {
   const [showResume, setShowResume] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showContent, setShowContent] = useState(true);
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -46,27 +49,27 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <SocialMedia  onResumeUnlock={() => setShowResume(true)} />
+                <SocialMedia onResumeUnlock={() => setShowResume(true)} />
               </div>
             </div>
           </div>
         </div>
-        {showResume ? (
-          <div className="border rounded w-full max-w-4xl p-2">
-            <div className="flex flex-row">
-              <Resume />
-              <div>
-                <button onClick={() => setShowResume(false)} aria-label="Close" className="cursor-pointer">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                  </svg>
-                </button>
+        {showContent ?
+          (
+            <div className="border rounded w-full max-w-4xl p-2">
+              <div className="flex flex-row">
+                {showResume ? (<Resume />) : (<div><Welcome /></div>)}
+                <div>
+                  <button onClick={() => setShowContent(false)} aria-label="Close" className="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <></>
-        )}
+          ) : (<></>)}
+
 
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
